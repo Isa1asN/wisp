@@ -69,9 +69,11 @@ Any contributions are welcome! This app can be extended with more features and i
 
 ## Building for Distribution
 
+**⚠️ Windows Users:** Run PowerShell/Command Prompt as Administrator when packaging:
+
 ```bash
 npm run build
-npm run package     # Current platform
+npm run package     # Current platform, I've only tested it on Ubuntu & Windows
 npm run package:all # All platforms
 ```
 
