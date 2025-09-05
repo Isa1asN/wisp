@@ -1,0 +1,72 @@
+.app-container {
+  height: 100vh;
+  width: 100vw;
+  background: transparent;
+  position: relative;
+}
+
+.glass-effect {
+  background: rgba(255, 255, 255, 0.87);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(150, 150, 150, 0.9);
+}
+
+.dark .glass-effect {
+  background: rgba(0, 0, 0, 0.87);
+  border: 1px solid rgba(255, 255, 255, 0.8);
+}
+
+* {
+  transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+}
+
+@keyframes pulse-recording {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.05);
+    opacity: 0.8;
+  }
+}
+
+.recording-pulse {
+  animation: pulse-recording 1.5s ease-in-out infinite;
+}
+
+@keyframes waveform {
+  0% {
+    transform: scaleY(0.3);
+  }
+  100% {
+    transform: scaleY(1);
+  }
+}
+
+.waveform-bar {
+  animation: waveform 0.5s ease-in-out infinite alternate;
+}
+
+.btn-primary {
+  @apply bg-primary-500 hover:bg-primary-600 text-white font-medium py-2 px-4 rounded-lg transition-colors duration-200;
+}
+
+.btn-secondary {
+  @apply bg-white/20 hover:bg-white/30 text-white font-medium py-2 px-4 rounded-lg transition-colors duration-200 border border-white/30;
+}
+
+.dark .btn-secondary {
+  @apply bg-black/20 hover:bg-black/30 border-white/20;
+}
+
+::selection {
+  background: rgba(59, 130, 246, 0.3);
+}
+
+button:focus,
+textarea:focus {
+  outline: 2px solid rgb(59, 130, 246);
+  outline-offset: 2px;
+}
