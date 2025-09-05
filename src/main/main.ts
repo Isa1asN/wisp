@@ -1,4 +1,4 @@
-import { app, BrowserWindow, globalShortcut, ipcMain, clipboard, Menu } from 'electron'
+import { app, BrowserWindow, globalShortcut, ipcMain, clipboard, Menu, nativeImage } from 'electron'
 import { join } from 'path'
 import { readFileSync, writeFileSync, existsSync, mkdirSync } from 'fs'
 import { homedir } from 'os'
@@ -76,6 +76,9 @@ class WispApp {
   }
 
   private initializeApp() {
+    app.commandLine.appendSwitch('disable-gpu-sandbox')
+    app.commandLine.appendSwitch('disable-software-rasterizer')
+    
     app.whenReady().then(() => {
       this.createWindow()
       this.setupGlobalShortcuts()
@@ -101,6 +104,18 @@ class WispApp {
   }
 
   private createWindow() {
+    let iconPath: string | undefined;
+    
+    if (process.platform === 'win32') {
+      iconPath = isDev() 
+        ? join(process.cwd(), 'build/icons/icons/win/icon.ico')
+        : join(process.resourcesPath, 'build/icons/icons/win/icon.ico')
+    } else {
+      iconPath = isDev() 
+        ? join(process.cwd(), 'build/icons/icons/png/256x256.png')
+        : join(process.resourcesPath, 'build/icons/icons/png/256x256.png')
+    }
+
     this.mainWindow = new BrowserWindow({
       width: 600,
       height: 800,
@@ -113,6 +128,8 @@ class WispApp {
       skipTaskbar: false,
       focusable: true,
       minimizable: true,
+      show: false,
+      icon: iconPath,
       webPreferences: {
         nodeIntegration: false,
         contextIsolation: true,
@@ -128,6 +145,10 @@ class WispApp {
     } else {
       this.mainWindow.loadFile(join(__dirname, 'renderer/index.html'))
     }
+
+    this.mainWindow.once('ready-to-show', () => {
+      this.mainWindow?.show()
+    })
 
     this.mainWindow.on('closed', () => {
       this.mainWindow = null

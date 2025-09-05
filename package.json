@@ -11,8 +11,9 @@
     "build:main": "tsc -p tsconfig.main.json",
     "build:renderer": "vite build",
     "generate-icons": "electron-icon-maker --input=./build/icons/icon.png --output=./build/icons",
-    "package": "npm run build && electron-builder",
+    "package": "npm run build && set CSC_IDENTITY_AUTO_DISCOVERY=false && set WIN_CSC_LINK= && set CSC_LINK= && set CSC_KEY_PASSWORD= && electron-builder",
     "package:all": "npm run build && electron-builder -mwl",
+    "clear-icon-cache": "ie4uinit.exe -show",
     "postinstall": "electron-builder install-app-deps"
   },
   "keywords": [
@@ -58,11 +59,12 @@
     },
     "files": [
       "dist/**/*",
+      "build/**/*",
       "package.json"
     ],
     "mac": {
       "category": "public.app-category.productivity",
-      "icon": "build/icons/icon.icns",
+      "icon": "build/icons/icons/mac/icon.icns",
       "target": [
         {
           "target": "dmg",
@@ -74,18 +76,21 @@
       ]
     },
     "win": {
-      "icon": "build/icons/icon.ico",
+      "icon": "build/icons/icons/win/icon.ico",
       "target": [
         {
-          "target": "nsis",
+          "target": "portable",
           "arch": [
             "x64"
           ]
         }
-      ]
+      ],
+      "sign": false,
+      "forceCodeSigning": false,
+      "signAndEditExecutable": false
     },
     "linux": {
-      "icon": "build/icons",
+      "icon": "build/icons/icons/png",
       "target": [
         {
           "target": "AppImage",
