@@ -1,6 +1,6 @@
 # Wisp
 
-A minimalist cross-platform desktop app for voice-to-text typing anywhere on your system. I built this for myself cause I wanted a simple app to type quick at places like Cursor.
+A minimalist cross-platform desktop app for voice-to-text typing anywhere on your system. I built this for myself to type quick at places like Cursor.
 
 
 ## Features
